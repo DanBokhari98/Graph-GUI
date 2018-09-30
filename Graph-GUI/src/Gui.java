@@ -1,9 +1,9 @@
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import javax.swing.JRadioButton;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -13,6 +13,8 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 
@@ -20,65 +22,77 @@ import java.awt.Frame;
 public class Gui extends JFrame {
 	
 	private JFrame mainFrame;
-	private JButton addVertex;
-	private JButton addEdges;
-	private JButton Help;
-	private JPanel panel;
-	private JLabel item1;
-	private Panel controlPanel;
-	
-	
-	
-	public void prepareGUI() {
-		mainFrame = new JFrame("Graph GUI");
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.setSize(900, 600);
-		mainFrame.setVisible(true);
-//		mainFrame.setLayout(new BoxLayout(mainFrame.getContentPane(), BoxLayout.PAGE_AXIS));
-		mainFrame.setResizable(false);
-		
-
-		
-		//Button Management
-		addVertex.setSize(100, 200);
-		addEdges.setSize(100, 200);
-		addVertex = new JButton("Add vertex");
-		addEdges = new JButton("Add Edge");
-		addVertex.setBounds(0, 250, 120, 35);
-		addEdges.setBounds(0, 250, 120, 35);
-
-
-		//Panel settings
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.add(addVertex);
-		panel.add(addEdges);
-		
-		//Appending button to JFrame
-		mainFrame.add(panel);
-		
-	
-	}
-	
+	private JButton showConnectedComponents, addAllEdges, showCutVertices, Help;
+	protected GraphicalPicturePanel canvas;
+	private JPanel controlPanel;
+	private JRadioButton addVertex, addEdge, removeVertex, removeEdge, moveVertex;
 	
 	public Gui(){
 		super("Graph GUI");
 		prepareGUI();
 	}
 	
-	private void showCanvasDemo() {
-		controlPanel.add(new MyCanvas());
+	public void prepareGUI() {
+		mainFrame = new JFrame("Graph GUI");
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setSize(900, 600);
+		mainFrame.setLayout(new BoxLayout(mainFrame.getContentPane(), BoxLayout.X_AXIS));
+		mainFrame.setResizable(false);
+		setLeftPanel();
+		setCanvas();
 		mainFrame.setVisible(true);
 	}
 	
 	
+	public void setButtons() {
+		addAllEdges = new JButton("Add Edges");
+		showConnectedComponents = new JButton("Connected Components");
+		showCutVertices = new JButton("Show Cut Vertices");
+		Help = new JButton("Help");
+	}
 	
-	public class MyCanvas extends Canvas {
-		
-		public MyCanvas() {
-			setBackground(Color.GRAY);
-			setSize(300,300);
-		}
+	public void setRadioButtons() {
+		addVertex = new JRadioButton("Add Vertex");
+		addEdge = new JRadioButton("Add Edge");
+		removeVertex = new JRadioButton("Remove Vertex");
+		removeEdge = new JRadioButton("Remove Edge");
+		moveVertex = new JRadioButton("Move Vertex");
+		setButtonGroup();
+	}
+	
+	public void setButtonGroup() {
+		ButtonGroup group = new ButtonGroup();
+		group.add(addVertex);
+		group.add(addEdge);
+		group.add(removeEdge);
+		group.add(removeVertex);
+		group.add(moveVertex);
 	}
 
+	public void setLeftPanel() {
+		setButtons();
+		setRadioButtons();
+		controlPanel = new JPanel();
+		controlPanel.setLayout(new GridLayout(9, 1));
+		controlPanel.setAlignmentX(LEFT_ALIGNMENT);
+		controlPanel.setPreferredSize(new Dimension(150, 600));
+		controlPanel.add(addVertex);
+		controlPanel.add(addEdge);
+		controlPanel.add(removeVertex);
+		controlPanel.add(removeEdge);
+		controlPanel.add(moveVertex);
+		controlPanel.add(addAllEdges);
+		controlPanel.add(showConnectedComponents);
+		controlPanel.add(showCutVertices);
+		controlPanel.add(Help);
+		mainFrame.add(controlPanel);
+	}
+	
+	public void setCanvas() {
+		canvas = new GraphicalPicturePanel(this);
+		canvas.setAlignmentX(RIGHT_ALIGNMENT);
+		mainFrame.add(canvas);
+	}
+	
 }
 
