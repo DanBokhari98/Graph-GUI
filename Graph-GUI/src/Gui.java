@@ -4,19 +4,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Label;
-import java.awt.Panel;
-import java.awt.BorderLayout;
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Frame;
 
 
 public class Gui extends JFrame {
@@ -25,7 +14,8 @@ public class Gui extends JFrame {
 	private JButton showConnectedComponents, addAllEdges, showCutVertices, Help;
 	protected GraphicalPicturePanel canvas;
 	private JPanel controlPanel;
-	private JRadioButton addVertex, addEdge, removeVertex, removeEdge, moveVertex;
+	protected JRadioButton addVertex, addEdge, removeVertex, removeEdge, moveVertex;
+	protected VertexClickListener vertexListener;
 	
 	public Gui(){
 		super("Graph GUI");
@@ -38,6 +28,7 @@ public class Gui extends JFrame {
 		mainFrame.setSize(900, 600);
 		mainFrame.setLayout(new BoxLayout(mainFrame.getContentPane(), BoxLayout.X_AXIS));
 		mainFrame.setResizable(false);
+		mainFrame.getContentPane().addMouseListener(new VertexClickListener());
 		setLeftPanel();
 		setCanvas();
 		mainFrame.setVisible(true);
@@ -75,7 +66,9 @@ public class Gui extends JFrame {
 		controlPanel = new JPanel();
 		controlPanel.setLayout(new GridLayout(9, 1));
 		controlPanel.setAlignmentX(LEFT_ALIGNMENT);
-		controlPanel.setPreferredSize(new Dimension(150, 600));
+		controlPanel.setPreferredSize(new Dimension (250, 600));
+		controlPanel.setMaximumSize(new Dimension(250, 600));
+		controlPanel.setMinimumSize(new Dimension(250, 600));
 		controlPanel.add(addVertex);
 		controlPanel.add(addEdge);
 		controlPanel.add(removeVertex);
@@ -93,6 +86,11 @@ public class Gui extends JFrame {
 		canvas.setAlignmentX(RIGHT_ALIGNMENT);
 		mainFrame.add(canvas);
 	}
+	
+	public Boolean addVertex() {
+		return addVertex.isSelected();
+	}
+	
 	
 }
 
