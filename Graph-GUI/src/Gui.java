@@ -5,33 +5,36 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.awt.Dimension;
 
 
 public class Gui extends JFrame {
 	
-	private JFrame mainFrame;
 	private JButton showConnectedComponents, addAllEdges, showCutVertices, Help;
 	protected GraphicalPicturePanel canvas;
 	private JPanel controlPanel;
 	protected JRadioButton addVertex, addEdge, removeVertex, removeEdge, moveVertex;
 	protected VertexClickListener vertexListener;
+	RadioButtonListener rbl = new RadioButtonListener();
+	ButtonListener btn = new ButtonListener();
 	
+	
+	//Executes GUI
 	public Gui(){
 		super("Graph GUI");
 		prepareGUI();
 	}
 	
+	//Sets up GUI
 	public void prepareGUI() {
-		mainFrame = new JFrame("Graph GUI");
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.setSize(900, 600);
-		mainFrame.setLayout(new BoxLayout(mainFrame.getContentPane(), BoxLayout.X_AXIS));
-		mainFrame.setResizable(false);
-		mainFrame.getContentPane().addMouseListener(new VertexClickListener());
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(900, 600);
+		setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
+		setResizable(false);
 		setLeftPanel();
 		setCanvas();
-		mainFrame.setVisible(true);
+		setVisible(true);
 	}
 	
 	
@@ -40,6 +43,10 @@ public class Gui extends JFrame {
 		showConnectedComponents = new JButton("Connected Components");
 		showCutVertices = new JButton("Show Cut Vertices");
 		Help = new JButton("Help");
+		addAllEdges.addActionListener(btn);
+		showConnectedComponents.addActionListener(btn);
+		showCutVertices.addActionListener(btn);
+		Help.addActionListener(btn);
 	}
 	
 	public void setRadioButtons() {
@@ -48,6 +55,15 @@ public class Gui extends JFrame {
 		removeVertex = new JRadioButton("Remove Vertex");
 		removeEdge = new JRadioButton("Remove Edge");
 		moveVertex = new JRadioButton("Move Vertex");
+		
+		
+		//Set rbl to radiobuttons
+		addVertex.addActionListener(rbl);
+		addEdge.addActionListener(rbl);
+		removeVertex.addActionListener(rbl);
+		removeEdge.addActionListener(rbl);
+		moveVertex.addActionListener(rbl);
+		
 		setButtonGroup();
 	}
 	
@@ -60,10 +76,12 @@ public class Gui extends JFrame {
 		group.add(moveVertex);
 	}
 
+	//Initialize buttons, groups and Control JPanel
 	public void setLeftPanel() {
 		setButtons();
 		setRadioButtons();
 		controlPanel = new JPanel();
+		
 		controlPanel.setLayout(new GridLayout(9, 1));
 		controlPanel.setAlignmentX(LEFT_ALIGNMENT);
 		controlPanel.setPreferredSize(new Dimension (250, 600));
@@ -78,19 +96,36 @@ public class Gui extends JFrame {
 		controlPanel.add(showConnectedComponents);
 		controlPanel.add(showCutVertices);
 		controlPanel.add(Help);
-		mainFrame.add(controlPanel);
+		add(controlPanel);
 	}
 	
+	//Creating Canvas JPanel
 	public void setCanvas() {
-		canvas = new GraphicalPicturePanel(this);
+		canvas = new GraphicalPicturePanel();
+		vertexListener = new VertexClickListener();
 		canvas.setAlignmentX(RIGHT_ALIGNMENT);
-		mainFrame.add(canvas);
+		canvas.addMouseListener(rbl);
+		add(canvas);
 	}
 	
+	//Was going to use this to check if radio button is on add vertex.
 	public Boolean addVertex() {
 		return addVertex.isSelected();
 	}
 	
 	
+	
+	//Pass VertexClickListeners to other classes.
+	public  VertexClickListener getListener() {
+		return vertexListener;
+	}
+	
+	public GraphicalPicturePanel getCanvas() {
+		return canvas;
+	}
+	
+	//Get Action Listener
+	
+//End of class	
 }
 

@@ -12,41 +12,46 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 
-public class GraphicalPicturePanel extends JPanel implements ActionListener{
+public class GraphicalPicturePanel extends JPanel{
+
+	static Graph graph = new Graph();
 	
-	Gui frame;
-	Canvas canvas;
-	JPanel canvasWindow;
-	private int x, y;
-	
-	public GraphicalPicturePanel(Gui frame) {
-		super();
-		this.frame = frame;
-//		frame.getContentPane().addMouseListener(new VertexClickListener());
-		canvasWindow = new JPanel();
+	public GraphicalPicturePanel() {
 		
 	}
 	
-	public void setCanvas() {
-		
-		canvasWindow.add(canvas);
+	public static Graph getGraph() {
+		return graph;
 	}
 	
 	@Override
-	public void paint(Graphics g) {
+	public void paintComponent(Graphics g) {	
+		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setPaint(Color.BLUE);
 		g2.setStroke(new BasicStroke(1.0f));
-//		Ellipse2D.Double circle = new Ellipse2D.Double(200, 500, 10, 10);
-//		g2.fill(circle);
+		if(graph.getVertices().size() != 0) {
+			for(Vertex v: graph.getVertices()) {
+				Ellipse2D.Double circle = new Ellipse2D.Double(v.getX(), v.getY(), 10, 10);
+				g2.fill(circle);
+			}
+			
+		}
 		
-		
+		//Code doesn't work
+		if(graph.getEdges().size() != 0) {
+			g2.setPaint(Color.RED);
+			for(Edge e : graph.getEdges()) {
+				// e.getX() is Vertex X
+				int x1 = e.getX().getX();
+				int y1 = e.getX().getY();
+				// e.getY() is Vertex Y
+				int x2 = e.getY().getX();
+				int y2 = e.getY().getY();
+				g2.drawLine(x1, y1, x2, y2);
+			}
+		}
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		
-	}
-
+	
+	//End of class
 }
