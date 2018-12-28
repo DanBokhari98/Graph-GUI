@@ -15,14 +15,12 @@ public class Gui extends JFrame {
 	protected GraphicalPicturePanel canvas;
 	private JPanel controlPanel;
 	protected JRadioButton addVertex, addEdge, removeVertex, removeEdge, moveVertex;
-	protected VertexClickListener vertexListener;
 	RadioButtonListener rbl = new RadioButtonListener();
 	ButtonListener btn = new ButtonListener();
 	
-	
 	//Executes GUI
 	public Gui(){
-		super("Graph GUI");
+		super("Graph-GUI 2.0");
 		prepareGUI();
 	}
 	
@@ -31,6 +29,7 @@ public class Gui extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(900, 600);
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
+		setLocationRelativeTo(null);
 		setResizable(false);
 		setLeftPanel();
 		setCanvas();
@@ -102,7 +101,6 @@ public class Gui extends JFrame {
 	//Creating Canvas JPanel
 	public void setCanvas() {
 		canvas = new GraphicalPicturePanel();
-		vertexListener = new VertexClickListener();
 		canvas.setAlignmentX(RIGHT_ALIGNMENT);
 		canvas.addMouseListener(rbl);
 		add(canvas);
@@ -113,19 +111,12 @@ public class Gui extends JFrame {
 		return addVertex.isSelected();
 	}
 	
-	
-	
-	//Pass VertexClickListeners to other classes.
-	public  VertexClickListener getListener() {
-		return vertexListener;
-	}
-	
 	public GraphicalPicturePanel getCanvas() {
 		return canvas;
 	}
 	
 	//Get Action Listener
 	
-//End of class	
+//End of Gui class	
 }
 
