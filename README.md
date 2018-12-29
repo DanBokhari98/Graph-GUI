@@ -1,5 +1,7 @@
 The Graph GUI project is a program that represents a graph data structure through Java Swing. 
 
+![graphguigif](https://user-images.githubusercontent.com/25066859/50532254-c5de1d00-0ae4-11e9-96b6-574ade3809e5.gif)
+
 1. Add Vertex - Allows a user to click onto the canvas and draw a vertex in that location
 2. Add Edge - Allows a user to click on a vertex (highlighted green when initiated) and click on a second vertex to draw
 a line between the two vertices.
